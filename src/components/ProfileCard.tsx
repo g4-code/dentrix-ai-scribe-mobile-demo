@@ -1,5 +1,5 @@
 import { Shield } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+// Removed unused Badge import
 import Image from "next/image";
 import { MessageIcon } from "./icons/Message";
 import { PencilIcon } from "./icons/Pencil";
@@ -8,7 +8,6 @@ interface ProfileCardProps {
   name: string;
   nickname?: string;
   lastName: string;
-  specialty: string;
   dob: string;
   age: number;
   gender: "M" | "F";
@@ -18,7 +17,6 @@ export const ProfileCard = ({
   name,
   nickname,
   lastName,
-  specialty,
   dob,
   age,
   gender,

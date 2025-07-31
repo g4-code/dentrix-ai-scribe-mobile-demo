@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Search, Home, Calendar, User, Settings, Users, HelpCircle, ChevronDown } from "lucide-react";
-import Image from "next/image";
+import { Search, ChevronDown } from "lucide-react";
+// Removed unused imports: Home, Calendar, User, Settings, Users, HelpCircle, Image
 import { SettingsIcon } from "./icons/Settings";
 import { LocationIcon } from "./icons/Location";
 import { InfoIcon } from "./icons/Info";

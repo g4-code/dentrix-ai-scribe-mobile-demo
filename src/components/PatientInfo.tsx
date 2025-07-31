@@ -1,6 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Edit2, Calendar, Activity, FileText, Stethoscope, CreditCard, User } from "lucide-react";
+// Removed unused imports: Avatar, AvatarFallback, AvatarImage, Button, Edit2, Calendar, Activity, FileText, Stethoscope, CreditCard, User
 import { ProfileCard } from "./ProfileCard";
 import { ToothButton } from "./icons/menu/chart";
 import { ProgressNodesButton } from "./icons/menu/progress-note";
@@ -17,7 +15,7 @@ export function PatientInfo() {
         {/* Left side - Avatar and Patient Details */}
         <div className="flex items-center space-x-4">
           {/* Patient Avatar */}
-        <ProfileCard  name="John" lastName="Smith" specialty="Dentist" dob="1984-01-01" age={40} gender="M" />   
+        <ProfileCard  name="John" lastName="Smith" dob="1984-01-01" age={40} gender="M" />   
         {/* Vertical Separator */}
         <div className="h-12 w-px bg-gray-300 mx-4"></div>
 

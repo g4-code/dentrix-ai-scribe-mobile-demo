@@ -12,10 +12,9 @@ import {
   Template, 
   ViewType 
 } from "./voiceai";
-import PulseWave from "@/app/components/PulseWave";
 import BackIcon from "./icons/BackIcon";
 import MenuIcon from "./icons/MenuIcon";
-import RecordButton from "./record/RecordButton";
+// Removed unused imports: PulseWave, RecordButton
 
 interface VoiceAISidebarProps {
   isOpen: boolean;
