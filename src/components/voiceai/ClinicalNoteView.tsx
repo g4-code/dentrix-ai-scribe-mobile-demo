@@ -393,7 +393,7 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
       {/* Mobile-optimized recording button */}
       <div className="px-4 py-8 sm:px-6 sm:py-10 flex justify-center">
         <Button
-          className="
+          className={`
             w-28 
             h-28 
             sm:w-32 
@@ -404,17 +404,21 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
             border-none 
             shadow-xl 
             hover:shadow-2xl
-            active:scale-95
-            mobile-transition
+            mobile-button-enhanced
+            mobile-touch-enhanced
+            mobile-focus-ring
+            mobile-performance-optimized
             mobile-tap-large
-            focus:ring-4
-            focus:ring-blue-300
             disabled:opacity-50
             disabled:cursor-not-allowed
-          "
+            ${isRecording ? 'mobile-recording-pulse' : ''}
+            ${microphoneState === MicrophoneState.SettingUp ? 'mobile-loading-pulse' : ''}
+          `}
           style={{
             background: isRecording 
               ? 'linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #B91C1C 100%)'
+              : microphoneState === MicrophoneState.SettingUp
+              ? 'linear-gradient(135deg, #9CA3AF 0%, #6B7280 50%, #4B5563 100%)'
               : 'linear-gradient(135deg, #93C5FD 0%, #3B82F6 50%, #1E40AF 100%)',
           }}
           onClick={() => {
@@ -429,7 +433,13 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
             }
           }}
           disabled={microphoneState === MicrophoneState.SettingUp}
-          aria-label={isRecording ? "Stop recording" : "Start recording"}
+          aria-label={
+            microphoneState === MicrophoneState.SettingUp 
+              ? "Setting up microphone..." 
+              : isRecording 
+                ? "Stop recording" 
+                : "Start recording"
+          }
         >
           {isRecording ? (
             <MicOff className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
@@ -463,9 +473,12 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
               font-semibold 
               shadow-lg 
               hover:shadow-xl
-              mobile-transition
-              mobile-button-lg
-              mobile-focus
+              mobile-button-enhanced
+              mobile-touch-enhanced
+              mobile-focus-ring
+              mobile-performance-optimized
+              mobile-thumb-zone
+              mobile-slide-up
               text-base
               sm:text-lg
             "

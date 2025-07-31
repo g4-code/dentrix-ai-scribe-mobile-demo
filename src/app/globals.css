@@ -396,4 +396,365 @@ body {
     outline-offset: 2px;
     border-radius: 0.375rem;
   }
+
+  /* ========================================
+     FINAL MOBILE POLISH & OPTIMIZATIONS
+     ======================================== */
+
+  /* Enhanced touch interactions with haptic-like feedback */
+  .mobile-touch-enhanced {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center;
+  }
+
+  .mobile-touch-enhanced:active {
+    transform: scale(0.98);
+    transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .mobile-touch-enhanced:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  /* Enhanced button interactions for mobile */
+  .mobile-button-enhanced {
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(0); /* Enable hardware acceleration */
+  }
+
+  .mobile-button-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+    pointer-events: none;
+  }
+
+  .mobile-button-enhanced:active::before {
+    width: 120%;
+    height: 120%;
+  }
+
+  .mobile-button-enhanced:active {
+    transform: scale(0.96) translateZ(0);
+  }
+
+  /* Mobile-optimized loading states */
+  .mobile-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+  }
+
+  .mobile-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #e5e7eb;
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    animation: mobile-spin 1s linear infinite;
+  }
+
+  @keyframes mobile-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Enhanced mobile loading with pulse effect */
+  .mobile-loading-pulse {
+    animation: mobile-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes mobile-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Mobile-optimized animations */
+  .mobile-fade-in {
+    animation: mobile-fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .mobile-slide-up {
+    animation: mobile-slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .mobile-slide-down {
+    animation: mobile-slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes mobile-fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes mobile-slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes mobile-slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Recording button special animation */
+  .mobile-recording-pulse {
+    animation: mobile-recordingPulse 1.5s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes mobile-recordingPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    70% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+  }
+
+  /* Enhanced focus management for mobile accessibility */
+  .mobile-focus-ring {
+    outline: none;
+    position: relative;
+  }
+
+  .mobile-focus-ring:focus-visible::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid #3b82f6;
+    border-radius: inherit;
+    border-radius: 0.75rem;
+    animation: mobile-focusPulse 0.3s ease-out;
+  }
+
+  @keyframes mobile-focusPulse {
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Mobile keyboard optimization */
+  .mobile-keyboard-safe {
+    padding-bottom: env(keyboard-inset-height, 0);
+    transition: padding-bottom 0.3s ease-in-out;
+  }
+
+  /* One-handed use optimizations */
+  .mobile-thumb-zone {
+    margin-bottom: 2rem; /* Keep important actions in thumb reach */
+  }
+
+  @media (max-height: 667px) {
+    .mobile-thumb-zone {
+      margin-bottom: 1rem; /* Reduce on shorter screens */
+    }
+  }
+
+  /* Enhanced card interactions */
+  .mobile-card-enhanced {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .mobile-card-enhanced:hover {
+    transform: translateY(-2px) translateZ(0);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .mobile-card-enhanced:active {
+    transform: translateY(0) scale(0.98) translateZ(0);
+    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Success state animations */
+  .mobile-success-bounce {
+    animation: mobile-successBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  @keyframes mobile-successBounce {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Performance optimizations */
+  .mobile-performance-optimized {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-touch-enhanced,
+    .mobile-button-enhanced,
+    .mobile-card-enhanced,
+    .mobile-fade-in,
+    .mobile-slide-up,
+    .mobile-slide-down,
+    .mobile-recording-pulse,
+    .mobile-success-bounce {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .mobile-touch-enhanced:active,
+    .mobile-button-enhanced:active,
+    .mobile-card-enhanced:active {
+      transform: none !important;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .mobile-focus-ring:focus-visible::before {
+      border-width: 4px;
+      border-color: ButtonText;
+    }
+
+    .mobile-button-enhanced,
+    .mobile-card-enhanced {
+      border: 2px solid ButtonText;
+    }
+  }
+
+  /* Print optimizations for mobile */
+  @media print {
+    .mobile-touch-enhanced,
+    .mobile-button-enhanced,
+    .mobile-card-enhanced {
+      transform: none !important;
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* Mobile keyboard and loading optimizations */
+  .keyboard-open {
+    /* Adjust layout when virtual keyboard is open */
+    padding-bottom: env(keyboard-inset-height, 0);
+  }
+
+  .mobile-loading-active {
+    cursor: wait;
+    pointer-events: none;
+  }
+
+  .mobile-loading-active * {
+    pointer-events: none;
+  }
+
+  /* Touch device specific optimizations */
+  .touch-device .mobile-button-enhanced:hover {
+    /* Disable hover effects on touch devices */
+    transform: none;
+    box-shadow: inherit;
+  }
+
+  .touch-device .mobile-card-enhanced:hover {
+    transform: none;
+    box-shadow: inherit;
+  }
+
+  /* Battery optimization classes */
+  .low-battery * {
+    animation-duration: 0.1s !important;
+    transition-duration: 0.1s !important;
+  }
+
+  /* Device-specific optimizations */
+  @supports (height: 100dvh) {
+    .mobile-full-height {
+      height: 100dvh;
+      min-height: 100dvh;
+    }
+  }
+
+  /* Enhanced accessibility for mobile */
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-fade-in,
+    .mobile-slide-up,
+    .mobile-slide-down,
+    .mobile-success-bounce,
+    .mobile-recording-pulse {
+      animation: none !important;
+    }
+  }
+
+  /* Mobile focus management improvements */
+  .mobile-focus-trap {
+    /* Ensures focus stays within modal/important content on mobile */
+    position: relative;
+  }
+
+  .mobile-focus-trap:focus-within {
+    outline: 2px solid #3b82f6;
+    outline-offset: 4px;
+    border-radius: 0.5rem;
+  }
 }

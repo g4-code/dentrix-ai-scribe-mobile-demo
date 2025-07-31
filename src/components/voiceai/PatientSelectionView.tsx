@@ -73,13 +73,16 @@ export function PatientSelectionView({ onPatientSelect }: PatientSelectionViewPr
                 border-blue-100
                 hover:border-blue-200
                 focus:border-blue-300
-                mobile-transition
-                mobile-focus
-                mobile-tap
+                mobile-touch-enhanced
+                mobile-card-enhanced
+                mobile-focus-ring
+                mobile-performance-optimized
                 text-left
+                mobile-fade-in
               "
               onClick={() => onPatientSelect(patient)}
               aria-label={`Select patient ${patient.name}`}
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               {/* Mobile-optimized avatar */}
               <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center">

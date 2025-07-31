@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   VoiceAIHeader, 
   PatientSelectionView, 
@@ -12,42 +12,67 @@ import {
   Template, 
   ViewType 
 } from "./voiceai";
+import { useMobileOptimization, useMobileKeyboard } from "./voiceai/hooks/useMobileOptimization";
 
 export function VoiceAIWorkflow() {
   const [currentView, setCurrentView] = useState<ViewType>('patient-selection');
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
 
+  // Mobile optimization hooks
+  const { triggerHapticFeedback, getMobileCapabilities, checkMemoryUsage } = useMobileOptimization();
+  useMobileKeyboard(); // Initialize mobile keyboard optimizations
+
+  // Log mobile capabilities on component mount
+  useEffect(() => {
+    const capabilities = getMobileCapabilities();
+    console.log('🎯 Voice AI Workflow optimized for mobile:', capabilities);
+    
+    // Check memory usage for voice recording optimization
+    checkMemoryUsage();
+  }, [getMobileCapabilities, checkMemoryUsage]);
+
   const handlePatientSelect = (patient: Patient) => {
+    triggerHapticFeedback('light'); // Provide tactile feedback
     setSelectedPatient(patient);
     setCurrentView('template-selection');
+    console.log('📱 Patient selected with haptic feedback:', patient.name);
   };
 
   const handleTemplateSelect = (template: Template) => {
+    triggerHapticFeedback('medium'); // Stronger feedback for template selection  
     setSelectedTemplate(template);
     setCurrentView('clinical-note');
+    console.log('📱 Template selected with haptic feedback:', template.name);
   };
 
   const handleBackToTemplateSelection = () => {
+    triggerHapticFeedback('light');
     setCurrentView('template-selection');
     setSelectedTemplate(null);
   };
 
   const handleBackToPatientSelection = () => {
+    triggerHapticFeedback('light');
     setCurrentView('patient-selection');
     setSelectedPatient(null);
     setSelectedTemplate(null);
   };
 
   const handleNavigateToSummary = () => {
+    triggerHapticFeedback('medium'); // Strong feedback for important transition
     setCurrentView('clinical-summary');
+    console.log('📱 Navigating to summary with haptic feedback');
   };
 
   const handleNavigateToSuccess = () => {
+    triggerHapticFeedback('heavy'); // Strongest feedback for success
     setCurrentView('success');
+    console.log('📱 Success achieved with haptic celebration!');
   };
 
   const handleBackToClinicalNote = () => {
+    triggerHapticFeedback('light');
     setCurrentView('clinical-note');
   };
 
@@ -56,12 +81,15 @@ export function VoiceAIWorkflow() {
     localStorage.removeItem('clinical-caption-text');
     localStorage.removeItem('clinical-checklist-data');
     
+    // Provide haptic feedback for new session
+    triggerHapticFeedback('medium');
+    
     // Reset all state
     setCurrentView('patient-selection');
     setSelectedPatient(null);
     setSelectedTemplate(null);
     
-    console.log("🔄 Started fresh recording session - all data cleared");
+    console.log("🔄 Started fresh recording session with haptic feedback - all data cleared");
   };
 
   const getHeaderTitle = () => {
@@ -95,14 +123,16 @@ export function VoiceAIWorkflow() {
   const shouldShowBackButton = currentView !== 'patient-selection';
 
   return (
-    <div className="
-      min-h-screen 
-      w-full 
-      bg-white 
+        <div className="
+      min-h-screen
+      w-full
+      bg-white
       flex 
       flex-col 
       overflow-hidden
       mobile-scroll
+      mobile-performance-optimized
+      mobile-focus-trap
       safe-area-inset-left
       safe-area-inset-right
     ">

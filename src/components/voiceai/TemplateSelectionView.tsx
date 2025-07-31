@@ -53,10 +53,11 @@ export function TemplateSelectionView({ selectedPatient, onTemplateSelect }: Tem
               text-base
               sm:text-sm
               text-gray-700
-              mobile-focus
-              mobile-transition
-              touch-manipulation
-              mobile-tap
+              mobile-focus-ring
+              mobile-touch-enhanced
+              mobile-keyboard-safe
+              mobile-performance-optimized
+              mobile-slide-down
             "
           />
         </div>
@@ -124,16 +125,19 @@ export function TemplateSelectionView({ selectedPatient, onTemplateSelect }: Tem
                 rounded-lg 
                 sm:rounded-xl
                 cursor-pointer 
-                mobile-transition
+                mobile-touch-enhanced
+                mobile-card-enhanced
+                mobile-focus-ring
+                mobile-performance-optimized
+                mobile-fade-in
                 border 
                 border-blue-100
                 hover:border-blue-200
                 focus:border-blue-300
-                mobile-focus
-                mobile-tap
                 text-left
                 group
               "
+              style={{ animationDelay: `${index * 100}ms` }}
               onClick={() => onTemplateSelect(template)}
               aria-label={`Select template: ${template.name}`}
             >
