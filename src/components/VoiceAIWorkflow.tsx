@@ -103,7 +103,7 @@ export function VoiceAIWorkflow() {
       case 'success':
         return 'Success';
       default:
-        return 'Voice AI';
+        return 'AI Scribe';
     }
   };
 
@@ -141,6 +141,7 @@ export function VoiceAIWorkflow() {
         title={getHeaderTitle()}
         onBack={getBackHandler()}
         showBackButton={shouldShowBackButton}
+        showIcon={currentView === 'patient-selection'}
       />
 
       {/* Mobile-optimized scrollable content area */}
