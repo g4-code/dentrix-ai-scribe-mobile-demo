@@ -136,4 +136,45 @@ body {
     background-color: #152a56 !important;
     color: #7ba7d9 !important;
   }
+
+  /* Mobile-first safe area inset support for devices with notches */
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+  
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  
+  .safe-area-inset-left {
+    padding-left: env(safe-area-inset-left, 0);
+  }
+  
+  .safe-area-inset-right {
+    padding-right: env(safe-area-inset-right, 0);
+  }
+
+  /* Mobile touch enhancements */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Mobile-optimized scrolling */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Mobile-first responsive typography */
+  .mobile-title {
+    font-size: clamp(1.125rem, 4vw, 1.5rem);
+    line-height: 1.2;
+  }
+  
+  /* Enhanced tap targets for mobile */
+  .mobile-tap {
+    min-width: 48px;
+    min-height: 48px;
+    touch-action: manipulation;
+  }
 }

@@ -128,7 +128,6 @@ export function VoiceAISidebar({ isOpen, onClose }: VoiceAISidebarProps) {
       </div>
       <VoiceAIHeader
         title={getHeaderTitle()}
-        onClose={handleClose}
         onBack={getBackHandler()}
         showBackButton={shouldShowBackButton}
       />
