@@ -17,7 +17,7 @@ export function VoiceAIHeader({ title, onBack, showBackButton = false, showIcon 
       {/* Safe area top inset for devices with notches */}
       <div className="safe-area-inset-top">
         <div className="px-4 py-3 sm:px-6 sm:py-4">
-          <div className="flex items-center justify-between min-h-[56px]">
+          <div className="flex items-center justify-between h-[56px]">
             <div className="flex items-center gap-3 sm:gap-4 flex-1">
               {showBackButton && onBack && (
                 <Button 
@@ -53,13 +53,13 @@ export function VoiceAIHeader({ title, onBack, showBackButton = false, showIcon 
               )}
               
               {showIcon ? (
-                <div className="flex items-center justify-center flex-1 py-2">
+                <div className="flex items-center justify-center flex-1 h-[56px]">
                   <Image
                     src="/icon_main.svg"
                     alt="Dentrix Ascend AI"
                     width={244} // Original SVG width for crisp rendering
                     height={128} // Original SVG height for crisp rendering
-                    className="h-16 sm:h-20 md:h-24 w-auto object-contain" // Much bigger: mobile (64px) -> tablet (80px) -> desktop (96px)
+                    className="max-h-[48px] sm:max-h-[52px] md:max-h-[52px] w-auto object-contain" // Constrained to fit header height
                     priority
                   />
                 </div>
