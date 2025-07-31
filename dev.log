@@ -1,0 +1,14 @@
+
+> dentrix-clone-ui@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.4.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.3:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 1085ms
+ ✓ Compiled /api/authenticate in 328ms (453 modules)
+ GET /api/authenticate 200 in 435ms
+[?25h

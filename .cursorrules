@@ -1,0 +1,199 @@
+# Dentrix Clone UI - AI Assistant Rules
+
+## Project Overview
+This is a Dentrix clone UI built with Next.js 15, featuring an integrated Voice AI workflow for clinical note-taking. The project demonstrates real-time speech-to-text transcription using Deepgram API with a clean, modular React architecture.
+
+## Technology Stack
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Radix UI components
+- **Speech-to-Text**: Deepgram SDK (@deepgram/sdk)
+- **AI Integration**: Vercel AI SDK (@ai-sdk/google, @ai-sdk/react, ai)
+- **Audio**: Web MediaRecorder API + MediaStream API
+- **State Management**: React Context API + Custom Hooks
+
+## Architecture Principles
+
+### File Organization
+- **Peer Components**: Create separate files for complex components instead of inlining
+- **Custom Hooks**: Extract business logic into reusable hooks (e.g., `useVoiceTranscription`)
+- **Context Providers**: Use React Context for global state (Deepgram, Microphone)
+- **Component Composition**: Break down complex UIs into focused, single-responsibility components
+
+### Directory Structure
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── context/           # Global Context Providers
+│   └── components/        # App-specific components
+├── components/            # Shared/reusable components
+│   ├── ui/               # Base UI components (Radix)
+│   └── voiceai/          # Voice AI workflow components
+│       ├── components/   # Peer components
+│       ├── hooks/        # Custom hooks
+│       └── types.ts      # Type definitions
+└── lib/                  # Utilities and helpers
+```
+
+## 📍 **File Placement & Configuration:**
+
+1. **Place at project root**: `/Users/accelerator/Documents/experiments/dentrix-clone-ui/.cursorrules`
+2. **No configuration needed**: Cursor automatically reads `.cursorrules` files
+3. **File format**: Plain text (no extension needed, but `.cursorrules` is the convention)
+
+## 🚀 **Next Steps:**
+1. Create the `.cursorrules` file at your project root
+2. Commit it as a milestone
+3. Test our latest Deepgram fix
+4. Future AI assistants will automatically understand your project context!
+
+This rules file captures all our architectural decisions, patterns, and hard-learned lessons about the Deepgram integration. 🎯
+
+## React/Next.js Best Practices
+
+### Component Structure
+- Use functional components with TypeScript interfaces
+- Export interfaces alongside components
+- Prefer composition over inheritance
+- Keep components focused on a single responsibility
+
+### State Management
+- Use `useState` for local component state
+- Use `useRef` for DOM references and mutable values
+- Use Context API for global state (auth, connections, etc.)
+- Custom hooks for complex state logic and side effects
+
+### TypeScript Conventions
+- Define explicit interfaces for all props
+- Use union types for state enums (e.g., `MicrophoneState`)
+- Avoid `any` - use proper typing
+- Export types alongside components for reusability
+
+### Custom Hooks Pattern
+```typescript
+// Example: useVoiceTranscription hook
+export interface UseVoiceTranscriptionReturn {
+  // Define clear return interface
+}
+
+export function useVoiceTranscription(): UseVoiceTranscriptionReturn {
+  // Encapsulate complex logic
+  // Handle side effects with useEffect
+  // Return clean interface
+}
+```
+
+## Voice AI Integration Patterns
+
+### Deepgram Integration
+- Use `DeepgramContextProvider` for WebSocket connection management
+- Always create fresh connections for new recording sessions
+- Handle connection states: CLOSED, CONNECTING, OPEN
+- Use `nova-2` model with interim results for real-time transcription
+
+### MediaRecorder Lifecycle
+- Create fresh `MediaRecorder` instances for each session
+- Properly stop MediaStream tracks to release browser microphone
+- Handle MediaRecorder states: inactive, recording, paused
+- Use `MicrophoneContextProvider` for centralized microphone management
+
+### Audio Processing Flow
+1. User clicks record → Request microphone permission
+2. Setup fresh MediaRecorder + MediaStream
+3. Establish fresh Deepgram WebSocket connection
+4. Start recording → Send audio data to Deepgram
+5. Process live transcription events
+6. Stop recording → Disconnect Deepgram + release microphone
+
+## Component Communication
+
+### Context Usage
+- `DeepgramContextProvider`: WebSocket connection state
+- `MicrophoneContextProvider`: MediaRecorder and MediaStream state
+- Pass down specific methods, not entire contexts
+
+### Event Handling
+- Use proper TypeScript event types
+- Handle async operations with proper error boundaries
+- Log state transitions with emoji markers for debugging
+
+## Code Quality Standards
+
+### Error Handling
+- Wrap async operations in try-catch blocks
+- Provide user-friendly error messages
+- Log errors with context for debugging
+
+### Logging Standards
+- Use emoji markers for log visibility: 🎤 🔌 📡 📝 ✅ ❌ 🔄
+- Include relevant state information in logs
+- Separate concerns: connection logs vs microphone logs vs transcription logs
+
+### Performance
+- Use `useCallback` for event handlers and functions passed to dependencies
+- Use `useRef` for values that shouldn't trigger re-renders
+- Clean up resources in `useEffect` cleanup functions
+
+## Deepgram Specific Rules
+
+### Connection Management
+- NEVER reuse Deepgram connections across MediaRecorder sessions
+- Always disconnect when microphone stops completely
+- Connect to Deepgram only when microphone is ready
+- Handle WebSocket close events gracefully
+
+### Audio Data Flow
+- Send audio data only when connection state is OPEN
+- Check `connection.getReadyState() === 1` before sending
+- Handle empty transcripts (Deepgram behavior on connection issues)
+
+## Styling Guidelines
+
+### Tailwind Classes
+- Use semantic class names
+- Group related classes logically
+- Prefer Tailwind utilities over custom CSS
+- Use Radix UI for accessible components
+
+### Responsive Design
+- Mobile-first approach
+- Use appropriate breakpoint prefixes
+- Test on various screen sizes
+
+## Commit Message Standards
+- Use conventional commits format
+- Include scope when relevant: `feat(voice-ai): add transcription display`
+- Examples:
+  - `feat: Add voice transcription with Deepgram integration`
+  - `fix: Resolve MediaRecorder state synchronization issue`
+  - `refactor: Extract voice logic into custom hook`
+
+## Do's and Don'ts
+
+### DO
+- ✅ Create peer components for complex logic
+- ✅ Use custom hooks for business logic
+- ✅ Handle cleanup in useEffect returns
+- ✅ Add comprehensive logging for debugging
+- ✅ Type all props and return values
+- ✅ Test microphone/audio functionality across browsers
+
+### DON'T
+- ❌ Pollute component files with complex business logic
+- ❌ Reuse Deepgram connections across sessions
+- ❌ Forget to release MediaStream tracks
+- ❌ Use `any` types
+- ❌ Modify the `/datagrambase` reference implementation
+- ❌ Create files without clear single responsibility
+
+## Testing Considerations
+- Test audio functionality in different browsers
+- Verify microphone permission flows
+- Test connection recovery scenarios
+- Validate state transitions in voice workflow
+
+## Future AI Integration
+- Use Vercel AI SDK for clinical note processing
+- Integrate Google Generative AI for content analysis
+- Maintain separation between transcription and AI processing
+- Consider real-time processing vs batch processing trade-offs
