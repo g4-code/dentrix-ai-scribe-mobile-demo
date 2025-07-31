@@ -95,52 +95,161 @@ export function VoiceAIWorkflow() {
   const shouldShowBackButton = currentView !== 'patient-selection';
 
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col overflow-y-auto">
+    <div className="
+      min-h-screen 
+      w-full 
+      bg-white 
+      flex 
+      flex-col 
+      overflow-hidden
+      mobile-scroll
+      safe-area-inset-left
+      safe-area-inset-right
+    ">
+      {/* Mobile-first responsive header */}
       <VoiceAIHeader
         title={getHeaderTitle()}
         onBack={getBackHandler()}
         showBackButton={shouldShowBackButton}
       />
 
-      <div className="flex-1 overflow-y-auto">
-        {currentView === 'patient-selection' && (
-          <PatientSelectionView onPatientSelect={handlePatientSelect} />
-        )}
+      {/* Mobile-optimized scrollable content area */}
+      <main className="
+        flex-1 
+        overflow-y-auto 
+        mobile-scroll
+        focus:outline-none
+        scroll-smooth
+        overscroll-contain
+      ">
+        {/* Mobile-first responsive container */}
+        <div className="
+          min-h-full
+          px-4 
+          py-4
+          sm:px-5 
+          sm:py-5
+          md:px-6 
+          md:py-6
+          lg:px-8 
+          lg:py-8
+          max-w-full
+          mx-auto
+          md:max-w-4xl
+          lg:max-w-6xl
+        ">
+          
+          {/* Patient Selection View - Mobile First */}
+          {currentView === 'patient-selection' && (
+            <div className="
+              w-full 
+              space-y-4 
+              sm:space-y-5 
+              md:space-y-6
+              animate-in 
+              fade-in-0 
+              slide-in-from-bottom-2 
+              duration-300
+            ">
+              <PatientSelectionView onPatientSelect={handlePatientSelect} />
+            </div>
+          )}
 
-        {currentView === 'template-selection' && selectedPatient && (
-          <TemplateSelectionView
-            selectedPatient={selectedPatient}
-            onTemplateSelect={handleTemplateSelect}
-          />
-        )}
+          {/* Template Selection View - Mobile First */}
+          {currentView === 'template-selection' && selectedPatient && (
+            <div className="
+              w-full 
+              space-y-4 
+              sm:space-y-5 
+              md:space-y-6
+              animate-in 
+              fade-in-0 
+              slide-in-from-right-2 
+              duration-300
+            ">
+              <TemplateSelectionView
+                selectedPatient={selectedPatient}
+                onTemplateSelect={handleTemplateSelect}
+              />
+            </div>
+          )}
 
-        {currentView === 'clinical-note' && selectedPatient && selectedTemplate && (
-          <ClinicalNoteView
-            selectedPatient={selectedPatient}
-            selectedTemplate={selectedTemplate}
-            onNavigateToSummary={handleNavigateToSummary}
-          />
-        )}
+          {/* Clinical Note View - Mobile First */}
+          {currentView === 'clinical-note' && selectedPatient && selectedTemplate && (
+            <div className="
+              w-full 
+              space-y-4 
+              sm:space-y-5 
+              md:space-y-6
+              animate-in 
+              fade-in-0 
+              slide-in-from-right-2 
+              duration-300
+              pb-safe-area-inset-bottom
+            ">
+              <ClinicalNoteView
+                selectedPatient={selectedPatient}
+                selectedTemplate={selectedTemplate}
+                onNavigateToSummary={handleNavigateToSummary}
+              />
+            </div>
+          )}
 
-        {currentView === 'clinical-summary' && selectedPatient && selectedTemplate && (
-          <ClinicalSummaryView
-            selectedPatient={selectedPatient}
-            selectedTemplate={selectedTemplate}
-            onNavigateToSuccess={handleNavigateToSuccess}
-            onClose={() => {
-              setCurrentView('patient-selection');
-              setSelectedPatient(null);
-              setSelectedTemplate(null);
-            }}
-          />
-        )}
+          {/* Clinical Summary View - Mobile First */}
+          {currentView === 'clinical-summary' && selectedPatient && selectedTemplate && (
+            <div className="
+              w-full 
+              space-y-4 
+              sm:space-y-5 
+              md:space-y-6
+              animate-in 
+              fade-in-0 
+              slide-in-from-right-2 
+              duration-300
+            ">
+              <ClinicalSummaryView
+                selectedPatient={selectedPatient}
+                selectedTemplate={selectedTemplate}
+                onNavigateToSuccess={handleNavigateToSuccess}
+                onClose={() => {
+                  setCurrentView('patient-selection');
+                  setSelectedPatient(null);
+                  setSelectedTemplate(null);
+                }}
+              />
+            </div>
+          )}
 
-        {currentView === 'success' && (
-          <SuccessView
-            onStartNewRecording={handleStartNewRecording}
-          />
-        )}
-      </div>
+          {/* Success View - Mobile First */}
+          {currentView === 'success' && (
+            <div className="
+              w-full 
+              flex 
+              flex-col 
+              items-center 
+              justify-center
+              min-h-[60vh]
+              space-y-6 
+              sm:space-y-8 
+              md:space-y-10
+              text-center
+              animate-in 
+              fade-in-0 
+              zoom-in-95 
+              duration-500
+            ">
+              <SuccessView
+                onStartNewRecording={handleStartNewRecording}
+              />
+            </div>
+          )}
+
+        </div>
+        
+        {/* Bottom safe area spacing for mobile devices */}
+        <div className="safe-area-inset-bottom h-4 sm:h-6 md:h-8" />
+        
+      </main>
     </div>
   );
 }
