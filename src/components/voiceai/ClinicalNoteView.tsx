@@ -370,26 +370,48 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
           animation: success-pulse 0.6s ease-out;
         }
       `}</style>
-      <div className="flex-1 flex flex-col">
-      {/* Patient Header */}
-      <div className="p-6 bg-blue-50 border-b border-blue-100">
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
-            <span className="text-sm font-medium text-gray-600">
+      <div className="flex-1 flex flex-col min-h-full">
+      {/* Mobile-optimized patient header */}
+      <div className="px-4 py-4 sm:px-6 sm:py-6 bg-blue-50 border-b border-blue-100">
+        <div className="flex items-center space-x-4 sm:space-x-5">
+          <div className="shrink-0 w-14 h-14 sm:w-16 sm:h-16 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
+            <span className="text-base sm:text-lg font-semibold text-gray-600 mobile-subtitle">
               {selectedPatient.name.split(' ').map(n => n[0]).join('')}
             </span>
           </div>
-          <div>
-            <h2 className="text-lg font-semibold text-gray-800">{selectedPatient.name}</h2>
-            <p className="text-sm text-gray-600">{selectedPatient.status}</p>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 truncate mobile-title">
+              {selectedPatient.name}
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 truncate mobile-body mt-1">
+              {selectedPatient.status}
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Recording Button */}
-      <div className="p-8 flex justify-center">
+      {/* Mobile-optimized recording button */}
+      <div className="px-4 py-8 sm:px-6 sm:py-10 flex justify-center">
         <Button
-          className="w-32 h-32 rounded-full border-none shadow-lg hover:shadow-xl transition-all duration-200"
+          className="
+            w-28 
+            h-28 
+            sm:w-32 
+            sm:h-32 
+            md:w-36 
+            md:h-36
+            rounded-full 
+            border-none 
+            shadow-xl 
+            hover:shadow-2xl
+            active:scale-95
+            mobile-transition
+            mobile-tap-large
+            focus:ring-4
+            focus:ring-blue-300
+            disabled:opacity-50
+            disabled:cursor-not-allowed
+          "
           style={{
             background: isRecording 
               ? 'linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #B91C1C 100%)'
@@ -407,18 +429,19 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
             }
           }}
           disabled={microphoneState === MicrophoneState.SettingUp}
+          aria-label={isRecording ? "Stop recording" : "Start recording"}
         >
           {isRecording ? (
-            <MicOff className="w-8 h-8 text-white" />
+            <MicOff className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           ) : (
-            <Mic className="w-8 h-8 text-white" />
+            <Mic className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           )}
         </Button>
       </div>
 
-      {/* View Summary Button - Shows after at least one recording */}
+      {/* Mobile-optimized view summary button */}
       {hasRecorded && (
-        <div className="px-6 pb-4 flex justify-center">
+        <div className="px-4 pb-4 sm:px-6 sm:pb-6 flex justify-center">
           <Button
             onClick={() => {
               // Save checklist data to localStorage for ClinicalSummaryView
@@ -426,15 +449,35 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
               console.log("💾 Saved checklist data to localStorage for summary view");
               onNavigateToSummary();
             }}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200"
+            className="
+              bg-green-600 
+              hover:bg-green-700 
+              active:bg-green-800
+              text-white 
+              px-6 
+              py-3 
+              sm:px-8 
+              sm:py-4
+              rounded-lg 
+              sm:rounded-xl
+              font-semibold 
+              shadow-lg 
+              hover:shadow-xl
+              mobile-transition
+              mobile-button-lg
+              mobile-focus
+              text-base
+              sm:text-lg
+            "
+            aria-label="View clinical summary"
           >
             View Summary
           </Button>
         </div>
       )}
 
-      {/* Enhanced Live Transcription Display */}
-      <div className="px-6 pb-4">
+      {/* Mobile-optimized transcription display */}
+      <div className="px-4 pb-4 sm:px-6 sm:pb-6">
         <TranscriptionDisplay 
           caption={caption}
           isRecording={isRecording}
@@ -448,24 +491,26 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
 
       {/* 🧪 Debug: Show accumulated text during recording */}
       {process.env.NODE_ENV === 'development' && isRecording && (
-        <div className="mx-6 mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <div className="text-xs font-medium text-blue-800 mb-1">📝 Session Text (Live Debug)</div>
-          <div className="text-sm text-blue-700 bg-white p-2 rounded border max-h-20 overflow-y-auto">
+        <div className="mx-4 mb-4 sm:mx-6 sm:mb-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-lg sm:rounded-xl">
+          <div className="text-xs sm:text-sm font-semibold text-blue-800 mb-2 mobile-body">📝 Session Text (Live Debug)</div>
+          <div className="text-sm sm:text-base text-blue-700 bg-white p-3 rounded border max-h-24 sm:max-h-32 overflow-y-auto mobile-scroll mobile-body">
             {debugCurrentSession || "Listening... speak to see text appear here"}
           </div>
         </div>
       )}
 
-      {/* Clinical Note Checklist */}
-      <div className="flex-1 px-6 pb-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-6">Clinical Note Checklist</h3>
+      {/* Mobile-optimized clinical note checklist */}
+      <div className="flex-1 px-4 pb-4 sm:px-6 sm:pb-6">
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6 mobile-title">
+          Clinical Note Checklist
+        </h3>
         
-        <div className="space-y-6 max-h-96 overflow-y-auto">
+        <div className="space-y-6 sm:space-y-8 max-h-96 sm:max-h-[500px] overflow-y-auto mobile-scroll">
           {checklistData.map((item) => (
-            <div key={item.id} className="space-y-3">
-              <div className="flex items-start space-x-3">
-                {/* Enhanced status indicator */}
-                <div className={`w-6 h-6 rounded-full flex-shrink-0 mt-0.5 border-2 transition-all duration-300 ${
+            <div key={item.id} className="space-y-4 sm:space-y-5">
+              <div className="flex items-start space-x-4 sm:space-x-5">
+                {/* Mobile-optimized status indicator */}
+                <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex-shrink-0 mt-1 border-3 transition-all duration-300 ${
                   item.selectedOption
                     ? item.autoCompleted
                       ? 'border-emerald-400 bg-emerald-500 shadow-lg animate-pulse'
@@ -475,34 +520,36 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
                   {item.selectedOption && (
                     <div className="w-full h-full rounded-full flex items-center justify-center">
                       {item.autoCompleted ? (
-                        <Sparkles className="w-3 h-3 text-white" />
+                        <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                       ) : (
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                        <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
                       )}
                     </div>
                   )}
                 </div>
                 
-                <div className="flex-1">
-                  {/* Enhanced title with AI indicator */}
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-base font-medium text-gray-800">{item.title}</h4>
+                <div className="flex-1 min-w-0">
+                  {/* Mobile-optimized title with AI indicator */}
+                  <div className="flex items-start justify-between mb-3 sm:mb-4 gap-3">
+                    <h4 className="text-base sm:text-lg font-semibold text-gray-800 mobile-subtitle flex-1">
+                      {item.title}
+                    </h4>
                     {item.selectedOption && item.autoCompleted && (
-                      <div className="flex flex-col items-end space-y-1 animate-fade-in">
-                        <div className="flex items-center space-x-2">
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700 animate-success-pulse">
-                            <Sparkles className="w-3 h-3 mr-1" />
+                      <div className="flex flex-col items-end space-y-2 sm:space-y-3 animate-fade-in shrink-0">
+                        <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2">
+                          <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-emerald-100 text-emerald-700 animate-success-pulse">
+                            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                             AI Selected
                           </span>
                           <button
                             onClick={() => handleUndoAutoComplete(item.id)}
-                            className="text-xs text-gray-500 hover:text-gray-700 underline transition-colors hover:bg-gray-100 px-1 py-0.5 rounded"
+                            className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 underline mobile-transition hover:bg-gray-100 px-2 py-1 rounded mobile-focus mobile-tap"
                           >
                             Undo
                           </button>
                         </div>
                         {item.detectedAt && (
-                          <div className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                          <div className="text-xs sm:text-sm text-gray-500 bg-gray-100 px-2 py-1 sm:px-3 sm:py-1.5 rounded mobile-body">
                             Detected {new Date(item.detectedAt).toLocaleTimeString([], { 
                               hour: '2-digit', 
                               minute: '2-digit', 
@@ -514,11 +561,11 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
                     )}
                   </div>
                   
-                  {/* Enhanced options with visual feedback */}
-                  <div className={`pl-4 space-y-2 transition-all duration-300 ${
+                  {/* Mobile-optimized options with enhanced touch targets */}
+                  <div className={`pl-4 sm:pl-6 space-y-3 sm:space-y-4 transition-all duration-300 ${
                     item.autoCompleted 
-                      ? 'border-l-2 border-emerald-300 bg-emerald-50 bg-opacity-30' 
-                      : 'border-l-2 border-gray-200'
+                      ? 'border-l-3 sm:border-l-4 border-emerald-300 bg-emerald-50 bg-opacity-30' 
+                      : 'border-l-3 sm:border-l-4 border-gray-200'
                   }`}>
                     {item.options.map((option) => {
                       const isSelected = item.selectedOption === option;
@@ -527,13 +574,27 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
                       return (
                         <label
                           key={option}
-                          className={`flex items-center space-x-3 cursor-pointer p-2 rounded-md transition-all duration-200 ${
-                            isAutoSelected
-                              ? 'bg-emerald-100 hover:bg-emerald-200 shadow-sm'
+                          className={`
+                            flex 
+                            items-center 
+                            justify-between
+                            gap-3
+                            cursor-pointer 
+                            p-3 
+                            sm:p-4
+                            min-h-[56px]
+                            rounded-lg 
+                            sm:rounded-xl
+                            mobile-transition
+                            mobile-tap
+                            mobile-focus
+                            ${isAutoSelected
+                              ? 'bg-emerald-100 hover:bg-emerald-200 active:bg-emerald-300 shadow-sm border border-emerald-200'
                               : isSelected
-                              ? 'bg-blue-100 hover:bg-blue-200 shadow-sm'
-                              : 'hover:bg-gray-50'
-                          }`}
+                              ? 'bg-blue-100 hover:bg-blue-200 active:bg-blue-300 shadow-sm border border-blue-200'
+                              : 'hover:bg-gray-50 active:bg-gray-100 border border-transparent'
+                            }
+                          `}
                           title={isAutoSelected ? (() => {
                             const finding = detectedFindings.find(f => 
                               f.checklistItemId === item.id && f.detectedValue === option
@@ -543,32 +604,50 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
                               : 'AI selected';
                           })() : undefined}
                         >
-                          <div className="relative">
-                            <input
-                              type="radio"
-                              name={item.id}
-                              value={option}
-                              checked={isSelected}
-                              onChange={() => handleOptionSelect(item.id, option)}
-                              className={`w-4 h-4 border-2 focus:ring-2 transition-colors ${
-                                isAutoSelected
-                                  ? 'text-emerald-600 border-emerald-300 focus:ring-emerald-500'
-                                  : 'text-blue-600 border-gray-300 focus:ring-blue-500'
-                              }`}
-                            />
+                          <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                            <div className="relative shrink-0">
+                              <input
+                                type="radio"
+                                name={item.id}
+                                value={option}
+                                checked={isSelected}
+                                onChange={() => handleOptionSelect(item.id, option)}
+                                className={`
+                                  w-5 
+                                  h-5 
+                                  sm:w-6 
+                                  sm:h-6
+                                  border-2 
+                                  focus:ring-3
+                                  mobile-transition
+                                  mobile-focus
+                                  ${isAutoSelected
+                                    ? 'text-emerald-600 border-emerald-400 focus:ring-emerald-500'
+                                    : 'text-blue-600 border-gray-400 focus:ring-blue-500'
+                                  }
+                                `}
+                              />
+                            </div>
+                            <span className={`
+                              text-base 
+                              sm:text-lg 
+                              mobile-transition
+                              mobile-subtitle
+                              flex-1
+                              ${isAutoSelected 
+                                ? 'text-emerald-800 font-semibold' 
+                                : isSelected
+                                ? 'text-blue-800 font-semibold'
+                                : 'text-gray-700 font-medium'
+                              }
+                            `}>
+                              {option}
+                            </span>
                           </div>
-                          <span className={`text-sm transition-colors ${
-                            isAutoSelected 
-                              ? 'text-emerald-800 font-medium' 
-                              : isSelected
-                              ? 'text-blue-800 font-medium'
-                              : 'text-gray-700'
-                          }`}>
-                            {option}
-                          </span>
+                          
                           {isAutoSelected && (
-                            <div className="flex items-center ml-auto space-x-2">
-                              <span className="text-xs text-emerald-600 bg-emerald-200 px-2 py-0.5 rounded-full animate-pulse">
+                            <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2 sm:gap-3 shrink-0">
+                              <span className="text-xs sm:text-sm text-emerald-600 bg-emerald-200 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full animate-pulse mobile-body font-medium">
                                 Detected from speech
                               </span>
                               {/* Find and display confidence from detectedFindings */}
@@ -577,7 +656,7 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
                                   f.checklistItemId === item.id && f.detectedValue === option
                                 );
                                 return finding ? (
-                                  <div className="text-xs text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-mono">
+                                  <div className="text-xs sm:text-sm text-emerald-700 bg-emerald-100 px-2 py-1 sm:px-2.5 sm:py-1 rounded font-mono font-semibold">
                                     {Math.round(finding.confidence * 100)}%
                                   </div>
                                 ) : null;

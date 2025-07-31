@@ -153,52 +153,72 @@ export function ClinicalSummaryView({
   }).replace(':', '.');
 
   return (
-    <div className="flex-1 flex flex-col bg-white h-full overflow-hidden">
-      {/* Patient Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 flex-shrink-0">
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
-            <span className="text-sm font-medium text-gray-600">
+    <div className="flex-1 flex flex-col bg-white h-full overflow-hidden min-h-full">
+      {/* Mobile-optimized patient header */}
+      <div className="flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 border-b border-gray-200 flex-shrink-0">
+        <div className="flex items-center space-x-4 sm:space-x-5 flex-1 min-w-0">
+          <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
+            <span className="text-sm sm:text-base font-semibold text-gray-600 mobile-subtitle">
               {selectedPatient.name.split(' ').map(n => n[0]).join('')}
             </span>
           </div>
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900">{selectedPatient.name}</h2>
-            <p className="text-sm text-gray-600">{selectedTemplate.name}</p>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate mobile-title">
+              {selectedPatient.name}
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 truncate mobile-body">
+              {selectedTemplate.name}
+            </p>
           </div>
         </div>
         <button 
           onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          className="shrink-0 p-3 hover:bg-gray-100 active:bg-gray-200 rounded-full mobile-transition mobile-focus mobile-tap"
+          aria-label="Close summary view"
         >
-          <X className="w-5 h-5 text-gray-500" />
+          <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
         </button>
       </div>
 
-      {/* Consultation Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 flex-shrink-0">
-        <div className="flex items-center space-x-2">
-          <h3 className="text-xl font-semibold text-gray-900">
+      {/* Mobile-optimized consultation header */}
+      <div className="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4 border-b border-gray-200 flex-shrink-0">
+        <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
+          <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 mobile-title truncate">
             Consultation {consultationDate} {consultationTime}
           </h3>
-          <button className="p-1 hover:bg-gray-100 rounded transition-colors">
-            <Edit3 className="w-4 h-4 text-gray-500" />
+          <button className="shrink-0 p-2 hover:bg-gray-100 active:bg-gray-200 rounded mobile-transition mobile-focus mobile-tap">
+            <Edit3 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
           </button>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="border-b border-gray-200 flex-shrink-0">
-        <div className="flex space-x-8 px-4">
+      {/* Mobile-optimized tabs */}
+      <div className="border-b border-gray-200 flex-shrink-0 bg-gray-50 sm:bg-white">
+        <div className="flex px-4 sm:px-6 overflow-x-auto mobile-scroll">
           {(['summary', 'transcript', 'checklist'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`py-3 px-1 text-sm font-medium border-b-2 transition-colors capitalize ${
-                activeTab === tab
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+              className={`
+                shrink-0
+                py-3 
+                sm:py-4
+                px-4 
+                sm:px-6
+                text-sm 
+                sm:text-base
+                font-semibold
+                border-b-3
+                mobile-transition
+                mobile-focus
+                mobile-tap
+                capitalize
+                min-w-fit
+                ${activeTab === tab
+                  ? 'border-blue-600 text-blue-600 bg-blue-50 sm:bg-transparent'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-100 sm:hover:bg-gray-50'
+                }
+              `}
             >
               {tab}
             </button>
@@ -206,9 +226,9 @@ export function ClinicalSummaryView({
         </div>
       </div>
 
-      {/* Content Area */}
-      <div className="flex-1 overflow-hidden p-4 min-h-0">
-        <div className="h-full overflow-y-auto">
+      {/* Mobile-optimized content area */}
+      <div className="flex-1 overflow-hidden px-4 py-4 sm:px-6 sm:py-6 min-h-0">
+        <div className="h-full overflow-y-auto mobile-scroll">
         {activeTab === 'summary' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between mb-4">
