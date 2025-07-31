@@ -57,9 +57,9 @@ export function VoiceAIHeader({ title, onBack, showBackButton = false, showIcon 
                   <Image
                     src="/icon_main.svg"
                     alt="Dentrix Ascend AI"
-                    width={183} // Scaled for responsive sizing
-                    height={96}  // Scaled for responsive sizing
-                    className="h-10 sm:h-12 md:h-14 w-auto object-contain" // Responsive sizing: mobile (40px) -> tablet (48px) -> desktop (56px)
+                    width={244} // Original SVG width for crisp rendering
+                    height={128} // Original SVG height for crisp rendering
+                    className="h-16 sm:h-20 md:h-24 w-auto object-contain" // Much bigger: mobile (64px) -> tablet (80px) -> desktop (96px)
                     priority
                   />
                 </div>
