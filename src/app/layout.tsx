@@ -21,6 +21,13 @@ export const metadata: Metadata = {
   description: "Real-time speech-to-text with AI summary",
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  userScalable: false,
+  viewportFit: 'cover'
+};
+
 export default function RootLayout({
   children,
 }: {
