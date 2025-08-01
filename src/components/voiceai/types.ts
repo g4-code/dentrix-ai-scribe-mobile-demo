@@ -75,4 +75,4 @@ export interface ClinicalAnalysisState {
 /**
  * View types for the voice AI workflow navigation
  */
-export type ViewType = 'patient-selection' | 'template-selection' | 'clinical-note' | 'clinical-summary' | 'success'; 
+export type ViewType = 'welcome-view' | 'patient-selection' | 'template-selection' | 'clinical-note' | 'clinical-summary' | 'success'; 

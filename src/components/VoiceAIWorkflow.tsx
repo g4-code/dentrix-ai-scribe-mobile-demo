@@ -14,9 +14,10 @@ import {
 } from "./voiceai";
 import { useMobileOptimization, useMobileKeyboard } from "./voiceai/hooks/useMobileOptimization";
 import FooterMenu from "./Footer";
+import { WelcomeView } from "./voiceai/WelcomeView";
 
 export function VoiceAIWorkflow() {
-  const [currentView, setCurrentView] = useState<ViewType>('patient-selection');
+  const [currentView, setCurrentView] = useState<ViewType>('welcome-view');
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
 
@@ -33,6 +34,10 @@ export function VoiceAIWorkflow() {
     checkMemoryUsage();
   }, [getMobileCapabilities, checkMemoryUsage]);
 
+  const handleStartAppointment = () => {
+    triggerHapticFeedback('light')
+    setCurrentView('patient-selection');
+  };
   const handlePatientSelect = (patient: Patient) => {
     triggerHapticFeedback('light'); // Provide tactile feedback
     setSelectedPatient(patient);
@@ -56,6 +61,13 @@ export function VoiceAIWorkflow() {
   const handleBackToPatientSelection = () => {
     triggerHapticFeedback('light');
     setCurrentView('patient-selection');
+    setSelectedPatient(null);
+    setSelectedTemplate(null);
+  };
+
+  const handleBackToWelcomeView = () => {
+    triggerHapticFeedback('light');
+    setCurrentView('welcome-view');
     setSelectedPatient(null);
     setSelectedTemplate(null);
   };
@@ -95,6 +107,8 @@ export function VoiceAIWorkflow() {
 
   const getHeaderTitle = () => {
     switch (currentView) {
+      case 'patient-selection':
+        return 'Select from Arrived Patient';
       case 'template-selection':
         return 'Select Template';
       case 'clinical-note':
@@ -110,6 +124,8 @@ export function VoiceAIWorkflow() {
 
   const getBackHandler = () => {
     switch (currentView) {
+      case 'patient-selection':
+        return handleBackToWelcomeView;
       case 'template-selection':
         return handleBackToPatientSelection;
       case 'clinical-note':
@@ -121,7 +137,7 @@ export function VoiceAIWorkflow() {
     }
   };
 
-  const shouldShowBackButton = currentView !== 'patient-selection';
+  const shouldShowBackButton = currentView !== 'welcome-view';
 
   return (
         <div className="
@@ -141,8 +157,8 @@ export function VoiceAIWorkflow() {
       <VoiceAIHeader
         title={getHeaderTitle()}
         onBack={getBackHandler()}
-        showBackButton={shouldShowBackButton}
-        showIcon={currentView === 'patient-selection'}
+        showBackButton={true}
+        showIcon={currentView === 'welcome-view'}
       />
 
       {/* Mobile-optimized scrollable content area */}
@@ -170,7 +186,22 @@ export function VoiceAIWorkflow() {
           md:max-w-2xl
           lg:max-w-6xl
         ">
-          
+          {
+            currentView === 'welcome-view' &&  (
+              <div className="
+                w-full 
+                space-y-4 
+                sm:space-y-5 
+                md:space-y-6
+                animate-in 
+                fade-in-0 
+                slide-in-from-bottom-2 
+                duration-300
+              ">
+                <WelcomeView onStartAppointment={handleStartAppointment}/>
+              </div>
+            )
+          }
           {/* Patient Selection View - Mobile First */}
           {currentView === 'patient-selection' && (
             <div className="
@@ -283,7 +314,7 @@ export function VoiceAIWorkflow() {
         
       </main> 
       <div>
-        {currentView === "patient-selection" && <FooterMenu/>}
+        {<FooterMenu/>}
       </div>
     </div>
   );
