@@ -197,6 +197,7 @@ export function VoiceAIWorkflow() {
                 fade-in-0 
                 slide-in-from-bottom-2 
                 duration-300
+                pb-24
               ">
                 <WelcomeView onStartAppointment={handleStartAppointment}/>
               </div>
@@ -214,6 +215,7 @@ export function VoiceAIWorkflow() {
               fade-in-0 
               slide-in-from-bottom-2 
               duration-300
+              pb-24
             ">
               <PatientSelectionView onPatientSelect={handlePatientSelect} />
             </div>
@@ -230,6 +232,7 @@ export function VoiceAIWorkflow() {
               fade-in-0 
               slide-in-from-right-2 
               duration-300
+              pb-24
             ">
               <TemplateSelectionView
                 selectedPatient={selectedPatient}
@@ -249,7 +252,7 @@ export function VoiceAIWorkflow() {
               fade-in-0 
               slide-in-from-right-2 
               duration-300
-              pb-safe-area-inset-bottom
+              pb-24
             ">
               <ClinicalNoteView
                 selectedPatient={selectedPatient}
@@ -270,6 +273,7 @@ export function VoiceAIWorkflow() {
               fade-in-0 
               slide-in-from-right-2 
               duration-300
+              pb-24
             ">
               <ClinicalSummaryView
                 selectedPatient={selectedPatient}
@@ -301,6 +305,7 @@ export function VoiceAIWorkflow() {
               fade-in-0 
               zoom-in-95 
               duration-500
+              pb-24
             ">
               <SuccessView
                 onStartNewRecording={handleStartNewRecording}
