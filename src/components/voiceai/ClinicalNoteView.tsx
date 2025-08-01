@@ -370,7 +370,7 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
           animation: success-pulse 0.6s ease-out;
         }
       `}</style>
-      <div className="flex-1 flex flex-col min-h-full">
+      <div className="flex-1 flex flex-col min-h-full pb-20">
       {/* Mobile-optimized patient header */}
       <div className="px-4 py-4 sm:px-6 sm:py-6 bg-blue-50 border-b border-blue-100">
         <div className="flex items-center space-x-4 sm:space-x-5">
@@ -489,18 +489,7 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
         </div>
       )}
 
-      {/* Mobile-optimized transcription display */}
-      <div className="px-4 pb-4 sm:px-6 sm:pb-6">
-        <TranscriptionDisplay 
-          caption={caption}
-          isRecording={isRecording}
-          isConnected={isConnected}
-          connectionHealth={connectionHealth}
-          silenceWarning={silenceWarning}
-          detectedFindings={detectedFindings}
-          isAnalyzing={false} // Could be enhanced with actual analyzing state
-        />
-      </div>
+    
 
       {/* 🧪 Debug: Show accumulated text during recording */}
       {process.env.NODE_ENV === 'development' && isRecording && (
@@ -512,174 +501,98 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
         </div>
       )}
 
+
+
       {/* Mobile-optimized clinical note checklist */}
       <div className="flex-1 px-4 pb-4 sm:px-6 sm:pb-6">
-        <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6 mobile-title">
+        <h3 className="text-xl font-bold text-gray-900 mb-6">
           Clinical Note Checklist
         </h3>
         
-        <div className="space-y-6 sm:space-y-8 max-h-96 sm:max-h-[500px] overflow-y-auto mobile-scroll">
+        <div className="space-y-8 max-h-96 sm:max-h-[500px] overflow-y-auto mobile-scroll">
           {checklistData.map((item) => (
-            <div key={item.id} className="space-y-4 sm:space-y-5">
-              <div className="flex items-start space-x-4 sm:space-x-5">
-                {/* Mobile-optimized status indicator */}
-                <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex-shrink-0 mt-1 border-3 transition-all duration-300 ${
-                  item.selectedOption
-                    ? item.autoCompleted
-                      ? 'border-emerald-400 bg-emerald-500 shadow-lg animate-pulse'
-                      : 'border-blue-400 bg-blue-500'
-                    : 'border-gray-300'
-                }`}>
-                  {item.selectedOption && (
-                    <div className="w-full h-full rounded-full flex items-center justify-center">
-                      {item.autoCompleted ? (
-                        <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                      ) : (
-                        <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-                      )}
+            <div key={item.id} className="flex items-start space-x-4">
+              {/* Status indicator */}
+              <div className={`w-6 h-6 rounded-full flex-shrink-0 border-2 flex items-center justify-center mt-1 ${
+                item.selectedOption
+                  ? 'border-green-500 bg-green-500'
+                  : 'border-gray-400 border-dashed'
+              }`}>
+                {item.selectedOption && (
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                )}
+              </div>
+              
+              <div className="flex-1 min-w-0">
+                {/* Title and AI indicator */}
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-semibold text-gray-900">
+                    {item.title}
+                  </h4>
+                  {item.selectedOption && item.autoCompleted && (
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                        <Sparkles className="w-3 h-3 mr-1" />
+                        AI Selected
+                      </span>
+                      <button
+                        onClick={() => handleUndoAutoComplete(item.id)}
+                        className="text-xs text-gray-500 hover:text-gray-700 underline"
+                      >
+                        Undo
+                      </button>
                     </div>
                   )}
                 </div>
                 
-                <div className="flex-1 min-w-0">
-                  {/* Mobile-optimized title with AI indicator */}
-                  <div className="flex items-start justify-between mb-3 sm:mb-4 gap-3">
-                    <h4 className="text-base sm:text-lg font-semibold text-gray-800 mobile-subtitle flex-1">
-                      {item.title}
-                    </h4>
-                    {item.selectedOption && item.autoCompleted && (
-                      <div className="flex flex-col items-end space-y-2 sm:space-y-3 animate-fade-in shrink-0">
-                        <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2">
-                          <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-emerald-100 text-emerald-700 animate-success-pulse">
-                            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                            AI Selected
-                          </span>
-                          <button
-                            onClick={() => handleUndoAutoComplete(item.id)}
-                            className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 underline mobile-transition hover:bg-gray-100 px-2 py-1 rounded mobile-focus mobile-tap"
-                          >
-                            Undo
-                          </button>
-                        </div>
-                        {item.detectedAt && (
-                          <div className="text-xs sm:text-sm text-gray-500 bg-gray-100 px-2 py-1 sm:px-3 sm:py-1.5 rounded mobile-body">
-                            Detected {new Date(item.detectedAt).toLocaleTimeString([], { 
-                              hour: '2-digit', 
-                              minute: '2-digit', 
-                              second: '2-digit' 
-                            })}
+                {/* Options with left border */}
+                <div className="border-l-2 border-gray-300 pl-6 space-y-3">
+                  {item.options.map((option) => {
+                    const isSelected = item.selectedOption === option;
+                    const isAutoSelected = isSelected && item.autoCompleted;
+                    
+                    return (
+                      <label
+                        key={option}
+                        className="flex items-center space-x-3 cursor-pointer"
+                      >
+                        <input
+                          type="radio"
+                          name={item.id}
+                          value={option}
+                          checked={isSelected}
+                          onChange={() => handleOptionSelect(item.id, option)}
+                          className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500"
+                        />
+                        <span className={`text-lg ${
+                          isSelected 
+                            ? 'font-bold text-gray-900' 
+                            : 'text-gray-700'
+                        }`}>
+                          {option}
+                        </span>
+                        {isAutoSelected && (
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-emerald-600 bg-emerald-200 px-2 py-1 rounded-full">
+                              Detected from speech
+                            </span>
+                            {(() => {
+                              const finding = detectedFindings.find(f => 
+                                f.checklistItemId === item.id && f.detectedValue === option
+                              );
+                              return finding ? (
+                                <div className="text-xs text-emerald-700 bg-emerald-100 px-2 py-1 rounded font-mono">
+                                  {Math.round(finding.confidence * 100)}%
+                                </div>
+                              ) : null;
+                            })()}
                           </div>
                         )}
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Mobile-optimized options with enhanced touch targets */}
-                  <div className={`pl-4 sm:pl-6 space-y-3 sm:space-y-4 transition-all duration-300 ${
-                    item.autoCompleted 
-                      ? 'border-l-3 sm:border-l-4 border-emerald-300 bg-emerald-50 bg-opacity-30' 
-                      : 'border-l-3 sm:border-l-4 border-gray-200'
-                  }`}>
-                    {item.options.map((option) => {
-                      const isSelected = item.selectedOption === option;
-                      const isAutoSelected = isSelected && item.autoCompleted;
-                      
-                      return (
-                        <label
-                          key={option}
-                          className={`
-                            flex 
-                            items-center 
-                            justify-between
-                            gap-3
-                            cursor-pointer 
-                            p-3 
-                            sm:p-4
-                            min-h-[56px]
-                            rounded-lg 
-                            sm:rounded-xl
-                            mobile-transition
-                            mobile-tap
-                            mobile-focus
-                            ${isAutoSelected
-                              ? 'bg-emerald-100 hover:bg-emerald-200 active:bg-emerald-300 shadow-sm border border-emerald-200'
-                              : isSelected
-                              ? 'bg-blue-100 hover:bg-blue-200 active:bg-blue-300 shadow-sm border border-blue-200'
-                              : 'hover:bg-gray-50 active:bg-gray-100 border border-transparent'
-                            }
-                          `}
-                          title={isAutoSelected ? (() => {
-                            const finding = detectedFindings.find(f => 
-                              f.checklistItemId === item.id && f.detectedValue === option
-                            );
-                            return finding 
-                              ? `AI detected from: "${finding.sourceText}" (${Math.round(finding.confidence * 100)}% confidence)`
-                              : 'AI selected';
-                          })() : undefined}
-                        >
-                          <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-                            <div className="relative shrink-0">
-                              <input
-                                type="radio"
-                                name={item.id}
-                                value={option}
-                                checked={isSelected}
-                                onChange={() => handleOptionSelect(item.id, option)}
-                                className={`
-                                  w-5 
-                                  h-5 
-                                  sm:w-6 
-                                  sm:h-6
-                                  border-2 
-                                  focus:ring-3
-                                  mobile-transition
-                                  mobile-focus
-                                  ${isAutoSelected
-                                    ? 'text-emerald-600 border-emerald-400 focus:ring-emerald-500'
-                                    : 'text-blue-600 border-gray-400 focus:ring-blue-500'
-                                  }
-                                `}
-                              />
-                            </div>
-                            <span className={`
-                              text-base 
-                              sm:text-lg 
-                              mobile-transition
-                              mobile-subtitle
-                              flex-1
-                              ${isAutoSelected 
-                                ? 'text-emerald-800 font-semibold' 
-                                : isSelected
-                                ? 'text-blue-800 font-semibold'
-                                : 'text-gray-700 font-medium'
-                              }
-                            `}>
-                              {option}
-                            </span>
-                          </div>
-                          
-                          {isAutoSelected && (
-                            <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2 sm:gap-3 shrink-0">
-                              <span className="text-xs sm:text-sm text-emerald-600 bg-emerald-200 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full animate-pulse mobile-body font-medium">
-                                Detected from speech
-                              </span>
-                              {/* Find and display confidence from detectedFindings */}
-                              {(() => {
-                                const finding = detectedFindings.find(f => 
-                                  f.checklistItemId === item.id && f.detectedValue === option
-                                );
-                                return finding ? (
-                                  <div className="text-xs sm:text-sm text-emerald-700 bg-emerald-100 px-2 py-1 sm:px-2.5 sm:py-1 rounded font-mono font-semibold">
-                                    {Math.round(finding.confidence * 100)}%
-                                  </div>
-                                ) : null;
-                              })()}
-                            </div>
-                          )}
-                        </label>
-                      );
-                    })}
-                  </div>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
             </div>
