@@ -206,6 +206,7 @@ export function VoiceAIWorkflow() {
           {currentView === 'patient-selection' && (
             <div className="
               w-full 
+              h-full
               space-y-4 
               sm:space-y-5 
               md:space-y-6

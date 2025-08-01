@@ -28,7 +28,7 @@ export function PatientSelectionView({ onPatientSelect }: PatientSelectionViewPr
       {/* Mobile-optimized patient list */}
       <div className="flex-1 px-4 py-4 sm:px-6 sm:py-6">
         {/* Mobile-first scrollable patient list */}
-        <div className="space-y-3 sm:space-y-4 max-h-100 sm:max-h-[500px] overflow-y-auto mobile-scroll">
+        <div className="space-y-3 sm:space-y-4 max-h-170 overflow-y-auto mobile-scroll">
           {patients.map((patient, index) => (
             <button 
               key={index}
@@ -41,7 +41,7 @@ export function PatientSelectionView({ onPatientSelect }: PatientSelectionViewPr
                 p-4 
                 sm:p-5
                 min-h-[60px]
-                sm:min-h-[68px]
+                sm:min-h-[68px] 
                 hover:bg-blue-50 
                 active:bg-blue-100
                 focus:bg-blue-50
