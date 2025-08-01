@@ -13,6 +13,7 @@ import {
   ViewType 
 } from "./voiceai";
 import { useMobileOptimization, useMobileKeyboard } from "./voiceai/hooks/useMobileOptimization";
+import FooterMenu from "./Footer";
 
 export function VoiceAIWorkflow() {
   const [currentView, setCurrentView] = useState<ViewType>('patient-selection');
@@ -166,7 +167,7 @@ export function VoiceAIWorkflow() {
           lg:py-8
           max-w-full
           mx-auto
-          md:max-w-4xl
+          md:max-w-2xl
           lg:max-w-6xl
         ">
           
@@ -280,7 +281,10 @@ export function VoiceAIWorkflow() {
         {/* Bottom safe area spacing for mobile devices */}
         <div className="safe-area-inset-bottom h-4 sm:h-6 md:h-8" />
         
-      </main>
+      </main> 
+      <div>
+        {currentView === "patient-selection" && <FooterMenu/>}
+      </div>
     </div>
   );
 }

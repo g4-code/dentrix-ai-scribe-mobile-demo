@@ -3,12 +3,15 @@
 import PulseWave from "@/app/components/PulseWave";
 import { Patient } from "./types";
 import Image from "next/image";
+import { useState } from "react";
 
 interface PatientSelectionViewProps {
   onPatientSelect: (patient: Patient) => void;
 }
 
 export function PatientSelectionView({ onPatientSelect }: PatientSelectionViewProps) {
+  const [showPacientList, setShowPacientList] = useState(true);
+
   const patients: Patient[] = [
     { name: "Vincente Akins", status: "Prophy, 8wx1", picture: "https://randomuser.me/api/portraits/men/1.jpg" },
     { name: "Ally Rose", status: "Prophy, 8wx1", picture: "https://randomuser.me/api/portraits/women/1.jpg" },
@@ -25,14 +28,14 @@ export function PatientSelectionView({ onPatientSelect }: PatientSelectionViewPr
       {/* Mobile-optimized header */}
       <div className="flex justify-center items-center py-4 sm:py-6">
         <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mobile-title">
-          Voice AI
+          Welcome to Ascend Voice AI
         </h3>
       </div>
       
       {/* Mobile-optimized description and voice button */}
       <div className="px-4 py-6 sm:px-6 sm:py-8 border-b border-gray-200 flex flex-col items-center">
         <p className="text-sm sm:text-base md:text-lg text-gray-600 text-center max-w-md sm:max-w-lg mobile-body leading-relaxed mb-6 sm:mb-8">
-          Start recording patient conversations and let Ascend handle live transcription and note-taking in your patient chart.
+        Start recording patient conversations and let Ascend handle live transcription and note-taking in real time.
         </p>
 
         {/* Mobile-responsive Voice AI Button */}
@@ -48,7 +51,7 @@ export function PatientSelectionView({ onPatientSelect }: PatientSelectionViewPr
         </h3>
         
         {/* Mobile-first scrollable patient list */}
-        <div className="space-y-3 sm:space-y-4 max-h-96 sm:max-h-[500px] overflow-y-auto mobile-scroll">
+        <div className="space-y-3 sm:space-y-4 max-h-100 sm:max-h-[500px] overflow-y-auto mobile-scroll">
           {patients.map((patient, index) => (
             <button 
               key={index}
