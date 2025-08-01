@@ -314,7 +314,13 @@ export function VoiceAIWorkflow() {
         <div className="safe-area-inset-bottom h-4 sm:h-6 md:h-8" />
         
       </main> 
-      <div>
+      <div style={{
+        position:'fixed',
+        bottom:0,
+        left:0,
+        right:0,
+        zIndex:1000,
+      }}>
         {<FooterMenu/>}
       </div>
     </div>
