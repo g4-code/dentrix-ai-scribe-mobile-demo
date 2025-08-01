@@ -489,6 +489,18 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
         </div>
       )}
 
+      {/* Mobile-optimized transcription display */}
+      <div className="px-4 pb-4 sm:px-6 sm:pb-6">
+        <TranscriptionDisplay 
+          caption={caption}
+          isRecording={isRecording}
+          isConnected={isConnected}
+          connectionHealth={connectionHealth}
+          silenceWarning={silenceWarning}
+          detectedFindings={detectedFindings}
+          isAnalyzing={false} // Could be enhanced with actual analyzing state
+        />
+      </div>
     
 
       {/* 🧪 Debug: Show accumulated text during recording */}

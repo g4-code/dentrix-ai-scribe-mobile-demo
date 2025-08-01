@@ -33,7 +33,7 @@ const PulseWave: React.FC<PulseWaveProps> = ({ size = 300 }) => {
           position: relative;
           width: ${size}px;
           height: ${size}px;
-          margin: 20px auto;
+          margin: 10px auto;
         }
 
         .pulse-circle {
@@ -100,7 +100,7 @@ const PulseWave: React.FC<PulseWaveProps> = ({ size = 300 }) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: ${5 * scaleFactor}px;
+          gap: ${2 * scaleFactor}px;
         }
 
         .sound-wave span {
