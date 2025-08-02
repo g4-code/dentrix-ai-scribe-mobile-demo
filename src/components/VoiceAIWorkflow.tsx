@@ -140,26 +140,45 @@ export function VoiceAIWorkflow() {
   const shouldShowBackButton = currentView !== 'welcome-view';
 
   return (
-        <div className="
-      min-h-screen
-      w-full
-      bg-white
-      flex 
-      flex-col 
-      overflow-hidden
-      mobile-scroll
-      mobile-performance-optimized
-      mobile-focus-trap
-      safe-area-inset-left
-      safe-area-inset-right
-    ">
-      {/* Mobile-first responsive header */}
-      <VoiceAIHeader
-        title={getHeaderTitle()}
-        onBack={getBackHandler()}
-        showBackButton={true}
-        showIcon={currentView === 'welcome-view'}
-      />
+    <>
+      {/* Fixed Footer - Always on top of everything */}
+      <div className="
+        fixed 
+        bottom-0 
+        left-0 
+        right-0 
+        z-50
+        bg-white
+        border-t
+        border-gray-200
+        shadow-lg
+        safe-area-inset-bottom
+        safe-area-inset-left
+        safe-area-inset-right
+      ">
+        <FooterMenu/>
+      </div>
+
+      <div className="
+        min-h-screen
+        w-full
+        bg-white
+        flex 
+        flex-col 
+        overflow-hidden
+        mobile-scroll
+        mobile-performance-optimized
+        mobile-focus-trap
+        safe-area-inset-left
+        safe-area-inset-right
+      ">
+        {/* Mobile-first responsive header */}
+        <VoiceAIHeader
+          title={getHeaderTitle()}
+          onBack={getBackHandler()}
+          showBackButton={true}
+          showIcon={currentView === 'welcome-view'}
+        />
 
       {/* Mobile-optimized scrollable content area */}
       <main className="
@@ -319,15 +338,7 @@ export function VoiceAIWorkflow() {
         <div className="safe-area-inset-bottom h-4 sm:h-6 md:h-8" />
         
       </main> 
-      <div style={{
-        position:'fixed',
-        bottom:0,
-        left:0,
-        right:0,
-        zIndex:1000,
-      }}>
-        {<FooterMenu/>}
       </div>
-    </div>
+    </>
   );
 }

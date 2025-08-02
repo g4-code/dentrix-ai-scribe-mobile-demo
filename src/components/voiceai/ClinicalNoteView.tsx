@@ -370,7 +370,7 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
           animation: success-pulse 0.6s ease-out;
         }
       `}</style>
-      <div className="flex-1 flex flex-col min-h-full pb-20">
+      <div className="flex-1 flex flex-col min-h-full pb-6">
       {/* Mobile-optimized patient header */}
       <div className="px-4 py-4 sm:px-6 sm:py-6 bg-blue-50 border-b border-blue-100">
         <div className="flex items-center space-x-4 sm:space-x-5">
@@ -516,12 +516,12 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
 
 
       {/* Mobile-optimized clinical note checklist */}
-      <div className="flex-1 px-4 pb-4 sm:px-6 sm:pb-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-6">
+      <div className="flex-1 px-4 pb-2 sm:px-6 sm:pb-3">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">
           Clinical Note Checklist
         </h3>
         
-        <div className="space-y-8 max-h-96 sm:max-h-[500px] overflow-y-auto mobile-scroll">
+        <div className="space-y-4 max-h-96 sm:max-h-[500px] overflow-y-auto mobile-scroll">
           {checklistData.map((item) => (
             <div key={item.id} className="flex items-start space-x-4">
               {/* Status indicator */}
@@ -539,7 +539,7 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
               
               <div className="flex-1 min-w-0">
                 {/* Title and AI indicator */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-2">
                   <h4 className="text-lg font-semibold text-gray-900">
                     {item.title}
                   </h4>
@@ -560,7 +560,7 @@ export function ClinicalNoteView({ selectedPatient, selectedTemplate, onNavigate
                 </div>
                 
                 {/* Options with left border */}
-                <div className="border-l-2 border-gray-300 pl-6 space-y-3">
+                <div className="border-l-2 border-gray-300 pl-6 space-y-2">
                   {item.options.map((option) => {
                     const isSelected = item.selectedOption === option;
                     const isAutoSelected = isSelected && item.autoCompleted;
