@@ -23,7 +23,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
     //const isActive = activeTab === tab;
     const isActive = false;
     return `
-      flex flex-col items-center justify-center py-2.5 px-3 rounded-lg transition-all duration-200 ease-in-out
+      flex flex-col items-center justify-center py-1 px-3 rounded-lg transition-all duration-200 ease-in-out
       ${isActive 
         ? 'text-blue-600 bg-blue-50' 
         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
@@ -36,7 +36,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
     <footer className="
       sticky bottom-0 left-0 right-0 z-50
       bg-white border-t border-gray-200 
-      px-4 py-2.5 safe-area-inset-bottom
+      px-4 py-1.5 safe-area-inset-bottom
       shadow-[0_-2px_10px_rgba(0,0,0,0.1)]
     ">
       {/* Navigation Menu */}
@@ -48,7 +48,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
           onClick={() => handleTabClick('home')}
           aria-label="Home"
         >
-          <div className="w-7 h-7 mb-1.5 flex items-center justify-center">
+          <div className="w-6 h-6 mb-1 flex items-center justify-center">
             <HomeIcon />
           </div>
           <span className="text-xs font-medium truncate">Home</span>
@@ -60,7 +60,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
           onClick={() => handleTabClick('template')}
           aria-label="Template"
         >
-          <div className="w-7 h-7 mb-1.5 flex items-center justify-center">
+          <div className="w-6 h-6 mb-1 flex items-center justify-center">
             <TemplateIcon />
           </div>
           <span className="text-xs font-medium truncate">Template</span>
@@ -72,7 +72,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
           onClick={() => handleTabClick('recording')}
           aria-label="Recording"
         >
-          <div className="w-7 h-7 mb-1.5 flex items-center justify-center relative">
+          <div className="w-6 h-6 mb-1 flex items-center justify-center relative">
             <RecordingIcon />
             {/* Recording indicator dot */}
             {isRecording && (
@@ -88,7 +88,7 @@ const FooterMenu: React.FC<FooterMenuProps> = ({
           onClick={() => handleTabClick('settings')}
           aria-label="Settings"
         >
-          <div className="w-7 h-7 mb-1.5 flex items-center justify-center">
+          <div className="w-6 h-6 mb-1 flex items-center justify-center">
             <SettingsIcon />
           </div>
           <span className="text-xs font-medium truncate">Settings</span>

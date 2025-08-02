@@ -52,19 +52,7 @@ export function VoiceAIHeader({ title, onBack, showBackButton = false, showIcon 
                 </Button>
               )}
               
-              {showIcon ? (
-                <div className="flex items-center justify-center flex-1 h-[56px]">
-                  <Image
-                    src="/icon_main.svg"
-                    alt="Dentrix Ascend AI"
-                    width={244} // Original SVG width for crisp rendering
-                    height={128} // Original SVG height for crisp rendering
-                    className="max-h-[48px] sm:max-h-[52px] md:max-h-[52px] w-auto object-contain" // Constrained to fit header height
-                    priority
-                  />
-                </div>
-              ) : (
-                <h1 className="
+              <h1 className="
                   text-lg 
                   sm:text-xl 
                   md:text-2xl 
@@ -78,7 +66,6 @@ export function VoiceAIHeader({ title, onBack, showBackButton = false, showIcon 
                 ">
                   {title}
                 </h1>
-              )}
             </div>
           </div>
         </div>

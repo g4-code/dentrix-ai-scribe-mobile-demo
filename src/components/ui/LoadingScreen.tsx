@@ -56,7 +56,7 @@ export default function LoadingScreen({
         {/* Brand Label */}
         <div className="text-center space-y-2">
           <h1 className="text-lg font-semibold text-gray-900 tracking-wide">
-            Dentrix Ascend AI Solutions
+            Dentrix Ascend Voice AI Scribe
           </h1>
           <p className="text-sm text-gray-500">
             Initializing your workspace...
