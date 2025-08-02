@@ -118,7 +118,7 @@ export function VoiceAIWorkflow() {
       case 'success':
         return 'Success';
       default:
-        return 'AI Scribe';
+        return '';
     }
   };
 
